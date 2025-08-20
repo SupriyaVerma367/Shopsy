@@ -1,25 +1,156 @@
-{%extends 'base.html'}
-{% block content %}
-    <header class="bg-dark py-5">
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Checkout</h1>
-                <p class="lead fw-normal text-white-50 mb-0">Review you Order...</p>
+<html>
+    <head>
+        <style>
+           
+body {
+    align-items: center;
+    background-color: #f8f9fa; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+header {
+    text-align: center;
+    background: linear-gradient(90deg, #343a40, #212529);
+    color: white;
+}
+.container{
+    align-items: center;
+}
+
+.container button{
+    margin-left: 40vw;
+    margin-top: 10px;
+    align-items: center;
+    border-radius: 5px;
+    background-color: green;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease; 
+}
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    
+}
+.card .update-button{
+    margin-left: 20px;
+    text-decoration: none;
+    height: 30px;
+    width: 65px;
+    border-radius: 5px;
+    background-color: green;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease; 
+}
+
+
+.card-header {
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+
+.btn {
+    border-radius: 8px !important;
+    padding: 10px 18px;
+    font-weight: 500;
+}
+
+.btn-success {
+    background: linear-gradient(90deg, #28a745, #218838);
+    border: none;
+}
+
+.btn-success:hover {
+    background: linear-gradient(90deg, #218838, #1e7e34);
+}
+
+.btn-outline-secondary {
+    border-radius: 6px;
+}
+
+/* Form fields */
+form label {
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
+    color: #495057;
+}
+
+form input,
+form select,
+form textarea {
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #80bdff;
+    box-shadow: 0px 0px 4px rgba(0, 123, 255, 0.4);
+    outline: none;
+}
+
+/* Order Summary */
+.order-summary {
+    margin-left: 15vw;
+    width: 60vw;
+    border: 2px solid black;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
+}
+
+.order-summary strong {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+/* Quantity dropdown */
+.form-select-sm {
+    border-radius: 6px;
+    width: 70px;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+        </style>
+    </head>
+    <body>
+        <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Checkout</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">Review you Order...</p>
+                </div>
             </div>
-        </div>
-    </header>
-    <br>
+        </header>
+        <br>
         <div class="container">
             <div class="row">
-                <div class="col-md-6 offset-md-3">
+                <div class="order-summary">
                     <div class="card">
                     <div class="card-header">Order Summary</div>
                     <div class="card-body">
-                        {% for product in cart_products%}
+                        <div class="cart-detail">
+                            {% for product in cart_products%}
+
                             {{product.name}}
-                            $:{{product.price}}
+                            $:{{product.price}}||
                             
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                         <small>Quantity:
                         <select class="form-select form-select-sm" id="select{{product.id}}">
                             {% for key, value in quantities.items %} 
@@ -36,25 +167,27 @@
                         <br><br>
                         <strong>Total:{{totals}}Rs.</strong>
                         <br>
-                        <a href="{% url 'cart_summary'%} class="btn btn-sm btn-outfit-secondary>Update Item</a>
+                        <a href="{% url 'cart_summary'%}" class="update-button" >Update Item</a>
                     </div>
                     </div>
                 </div>
             <br><br>
-            <div class="card">
+            <div class="order-summary">
+                <div class="card">
                 <div class="card-header">
                     Shipping Info
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{% utl 'billing_info'%}">
+                    <form method="POST" action="{% url 'billing_info'%}">
                         {% csrf_token %}
                     {{shipping_form.as_p}}
                 </div>
             </div>
-            <button type="submit" class="btn btn-secondary">Continue to Billing</button>
+            </div>
+            <button type="submit" class="billing-button">Continue to Billing</button>
             </form>
             </div>
         </div>
 
-    
-{% endblock %}
+    </body>
+</html>

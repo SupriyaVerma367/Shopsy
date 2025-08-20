@@ -11,7 +11,7 @@ class ShippingForm(forms.ModelForm):
     Shipping_country=forms.CharField(label="",widget=forms.TextInput({'class':'form-control','placeholder':'Country'}),required=True)
     
     class Meta:
-        model:ShippingAddress
+        model=ShippingAddress
         fields='__all__'
 
         exclude=['user',]
